@@ -8,6 +8,27 @@ for(var i = 0; i < cardCollection.length; i++) {
   cardCollection[i].addEventListener('click',cardClicked);
 }
 
+function cardClicked(evt){
+  if(flipCount == 0){
+    flipCount = 1;
+    evt.target.parentNode.classList.add('open', 'show');
+  } else if (flipCount == 1) {
+    flipCount = 2;
+    evt.target.parentNode.classList.add('open', 'show');
+    setTimeout(function(){ evaludateFlip(evt); }, 100);
+  }
+}
+
+function evaludateFlip(evt){
+  var shownCollection = document.getElementByClassName('show');
+  if(shownCollection[0].firstElementChild.className == shownCollection[1].fristElementChild.className){
+    alert('they match');
+  } else{
+    alert('no match');
+  }
+
+  flipCount = 0;
+}
 
 /*
  * Display the cards on the page
