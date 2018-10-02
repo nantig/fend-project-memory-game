@@ -1,6 +1,12 @@
 /*
  * Create a list that holds all of your cards
  */
+var flipCount = 0;
+
+var cardCollection = document.getElementByClassName('card');
+for(var i = 0; i < cardCollection.length; i++) {
+  cardCollection[i].addEventListener('click',cardClicked);
+}
 
 
 /*
