@@ -15,11 +15,11 @@ function cardClicked(evt){
   } else if (flipCount == 1) {
     flipCount = 2;
     evt.target.parentNode.classList.add('open', 'show');
-    setTimeout(function(){ evaludateFlip(evt); }, 100);
+    setTimeout(function(){ evaluateFlip(evt); }, 1000);
   }
 }
 
-function evaludateFlip(evt){
+function evaluateFlip(evt){
   var shownCollection = document.getElementsByClassName('show');
   if(shownCollection[0].firstElementChild.className == shownCollection[1].fristElementChild.className){
     alert('they match');
