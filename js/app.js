@@ -3,7 +3,7 @@
  */
 var flipCount = 0;
 
-var cardCollection = document.getElementByClassName('card');
+var cardCollection = document.getElementsByClassName('card');
 for(var i = 0; i < cardCollection.length; i++) {
   cardCollection[i].addEventListener('click',cardClicked);
 }
@@ -20,7 +20,7 @@ function cardClicked(evt){
 }
 
 function evaludateFlip(evt){
-  var shownCollection = document.getElementByClassName('show');
+  var shownCollection = document.getElementsByClassName('show');
   if(shownCollection[0].firstElementChild.className == shownCollection[1].fristElementChild.className){
     alert('they match');
   } else{
