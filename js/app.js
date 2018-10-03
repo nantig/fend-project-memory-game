@@ -3,11 +3,13 @@
  */
 var flipCount = 0;
 
+// looks for when a card is clicked
 var cardCollection = document.getElementsByClassName('card');
 for(var i = 0; i < cardCollection.length; i++) {
-  cardCollection[i].addEventListener('click',cardClicked);
+  cardCollection[i].addEventListener('click', cardClicked);
 }
 
+// only allows two cards to be clicked at a time
 function cardClicked(evt){
   if(flipCount == 0){
     flipCount = 1;
@@ -15,21 +17,33 @@ function cardClicked(evt){
   } else if (flipCount == 1) {
     flipCount = 2;
     evt.target.parentNode.classList.add('open', 'show');
-    setTimeout(function(){ evaluateFlip(evt); }, 1000);
+    setTimeout(function(){ evaluateFlip(evt); }, 300);
   }
 }
 
+// evaluate if the cards match
 function evaluateFlip(evt){
   var shownCollection = document.getElementsByClassName('show');
-  if(shownCollection[0].firstElementChild.className == shownCollection[1].fristElementChild.className){
+  if(shownCollection[0].firstElementChild.className == shownCollection[1].firstElementChild.className){
     alert('they match');
+    // evt.target.parentNode.classList.add('match', 'show');
   } else{
-    alert('no match');
+  }
+
+  while (shownCollection.length > 0) {
+    shownCollection[0].classList.remove('open', 'show');
   }
 
   flipCount = 0;
 }
 
+
+// puts all cards in a node list (because i cant figure out array)
+const deck = document.querySelectorAll('.deck');
+
+function shuffleCards() {
+
+}
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -63,3 +77,13 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+
+
+ // when two cards are the same, they stay shown
+ // cards flip (css?)
+ // "stars" functionality
+ // move counter
+ // game reset
+ // timer
