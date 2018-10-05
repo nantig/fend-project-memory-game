@@ -1,6 +1,7 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
 let openCards = []
+let movesCounter = 0;
 
 //shuffleCards
 function cardShuffle() {
@@ -35,6 +36,7 @@ function evaluateFlip(){
     openCards[0].parentNode.classList.add('match');
     openCards[1].parentNode.classList.add('match');
     openCards = [];
+    moves();
     // console.log('they match');
     // console.log(openCards);
   } else {
@@ -42,22 +44,18 @@ function evaluateFlip(){
       openCards[0].parentNode.classList.remove('open', 'show');
       openCards[1].parentNode.classList.remove('open', 'show');
       openCards = []; }, 500);
+      moves();
     // console.log('no match');
   }
 }
-// shuffle cards
-// function shuffleCards() {
-//   cards.length
-//   console.log(cards);
-// }
-// shuffleCards();
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
+// Record each move a player makes
+function moves() {
+  movesCounter++;
+  const movesCounterText = document.querySelector('.moves');
+  movesCounterText.innerHTML = movesCounter;
+}
+// provided in original document from Udacity:
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -75,20 +73,11 @@ function shuffle(array) {
 
 
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ TO DO LIST
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-
-
-
- // when two cards are the same, they stay shown
  // cards flip (css?)
  // "stars" functionality
  // move counter
