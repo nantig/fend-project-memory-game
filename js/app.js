@@ -3,6 +3,7 @@ let cards = [].slice.call(document.querySelectorAll('.card'));
 let openCards = []
 let movesCount = 0;
 let stars = [].slice.call(document.querySelectorAll('.fa-star'));
+let matches = []
 
 //shuffleCards
 function cardShuffle() {
@@ -38,6 +39,8 @@ function evaluateFlip(){
     openCards[1].parentNode.classList.add('match');
     openCards = [];
     moves();
+    matchedCards();
+    // console.log(matches);
     // console.log('they match');
     // console.log(openCards);
   } else {
@@ -74,6 +77,13 @@ function starCount() {
 }
 
 
+// keeps track of how many cards are matched
+function matchedCards() {
+  matches++;
+  if (matches === 8) {
+    // console.log('game won');
+  }
+}
 
 
 // provided in original document from Udacity:
@@ -98,8 +108,6 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- // cards flip (css?)
- // "stars" functionality
- // move counter
+
  // game reset
  // timer
