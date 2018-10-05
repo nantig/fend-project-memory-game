@@ -113,3 +113,8 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.clock {
+  float: center;
+  padding-left: 50px;
+}
