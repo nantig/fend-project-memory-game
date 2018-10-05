@@ -5,6 +5,18 @@ let cards = [].slice.call(document.querySelectorAll('.card'));
 for (card of cards) {
   card.addEventListener('click', cardClicked);
 }
+
+// when a card is clicked...
+function cardClicked(evt) {
+  const clickedCard = event.target;
+  if (openCards.length < 2 && !openCards.includes(clickedCard)) {
+    clickedCard.parentNode.classList.add('open', 'show');
+    openCards.push(clickedCard);
+    // console.log(openCards);
+  } if(openCards.length === 2) {
+    evaluateFlip();
+  }
+}
 // shuffle cards
 // function shuffleCards() {
 //   cards.length
