@@ -1,5 +1,6 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
+let openCards = []
 
 // clicked card event listener
 for (card of cards) {
