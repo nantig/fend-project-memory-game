@@ -1,49 +1,11 @@
-/*
- * Create a list that holds all of your cards
- */
-var flipCount = 0;
-
-// looks for when a card is clicked
-var cardCollection = document.getElementsByClassName('card');
-for(var i = 0; i < cardCollection.length; i++) {
-  cardCollection[i].addEventListener('click', cardClicked);
-}
-
-// only allows two cards to be clicked at a time
-function cardClicked(evt){
-  if(flipCount == 0){
-    flipCount = 1;
-    evt.target.parentNode.classList.add('open', 'show');
-  } else if (flipCount == 1) {
-    flipCount = 2;
-    evt.target.parentNode.classList.add('open', 'show');
-    setTimeout(function(){ evaluateFlip(evt); }, 300);
-  }
-}
-
-// evaluate if the cards match
-function evaluateFlip(evt){
-  var shownCollection = document.getElementsByClassName('show');
-  if(shownCollection[0].firstElementChild.className == shownCollection[1].firstElementChild.className){
-    alert('they match');
-    // evt.target.parentNode.classList.add('match', 'show');
-  } else{
-  }
-
-  while (shownCollection.length > 0) {
-    shownCollection[0].classList.remove('open', 'show');
-  }
-
-  flipCount = 0;
-}
-
-
-// puts all cards in a node list (because i cant figure out array)
-const deck = document.querySelectorAll('.deck');
-
-function shuffleCards() {
-
-}
+// array with all cards
+let cards = [].slice.call(document.querySelectorAll('.card'));
+// shuffle cards
+// function shuffleCards() {
+//   cards.length
+//   console.log(cards);
+// }
+// shuffleCards();
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
