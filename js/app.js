@@ -1,7 +1,8 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
 let openCards = []
-let movesCounter = 0;
+let movesCount = 0;
+let stars = [].slice.call(document.querySelectorAll('.fa-star'));
 
 //shuffleCards
 function cardShuffle() {
@@ -51,10 +52,30 @@ function evaluateFlip(){
 
 // Record each move a player makes
 function moves() {
-  movesCounter++;
-  const movesCounterText = document.querySelector('.moves');
-  movesCounterText.innerHTML = movesCounter;
+  movesCount++;
+  const movesNumber = document.querySelector('.moves');
+  movesNumber.innerHTML = movesCount;
+  starCount();
 }
+
+// remove stars as moves increase
+function starCount() {
+  if (movesCount === 5) {
+    stars[4].remove('fa-star');
+  } else if (movesCount === 10) {
+    stars[3].remove('fa-star');
+  } else if (movesCount === 15) {
+    stars[2].remove('fa-star');
+  } else if (movesCount === 20) {
+    stars[1].remove('fa-star');
+  } else {
+    movesCount > 20;
+  }
+}
+
+
+
+
 // provided in original document from Udacity:
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -74,7 +95,6 @@ function shuffle(array) {
 
 /*
  TO DO LIST
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
