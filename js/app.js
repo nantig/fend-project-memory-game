@@ -18,6 +18,24 @@ function cardClicked(evt) {
     evaluateFlip();
   }
 }
+// evaluate if the 2 cards that were clicked match
+function evaluateFlip(){
+  if (openCards[0].className === openCards[1].className){
+    openCards[0].parentNode.classList.remove('show');
+    openCards[1].parentNode.classList.remove('show');
+    openCards[0].parentNode.classList.add('match');
+    openCards[1].parentNode.classList.add('match');
+    openCards = [];
+    // console.log('they match');
+    // console.log(openCards);
+  } else {
+    setTimeout(function(){
+      openCards[0].parentNode.classList.remove('open', 'show');
+      openCards[1].parentNode.classList.remove('open', 'show');
+      openCards = []; }, 500);
+    // console.log('no match');
+  }
+}
 // shuffle cards
 // function shuffleCards() {
 //   cards.length
