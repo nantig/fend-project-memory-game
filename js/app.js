@@ -2,6 +2,15 @@
 let cards = [].slice.call(document.querySelectorAll('.card'));
 let openCards = []
 
+//shuffleCards
+function cardShuffle() {
+  shuffle(cards);
+  for (card of cards) {
+  card.parentElement.append(card);
+  }
+}
+cardShuffle();
+
 // clicked card event listener
 for (card of cards) {
   card.addEventListener('click', cardClicked);
