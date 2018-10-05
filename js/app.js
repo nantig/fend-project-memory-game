@@ -1,5 +1,10 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
+
+// clicked card event listener
+for (card of cards) {
+  card.addEventListener('click', cardClicked);
+}
 // shuffle cards
 // function shuffleCards() {
 //   cards.length
