@@ -7,9 +7,7 @@ let matches = []
 let seconds = 0;
 let minutes = 0;
 let clock = []
-let cardsClicked = []
-// .slice.call(document.querySelector('.clock'));
-// let clock = []
+let reset = [].slice.call(document.querySelectorAll('.restart'));
 
 //shuffleCards
 function cardShuffle() {
@@ -26,7 +24,7 @@ for (card of cards) {
 }
 
 // when a card is clicked...
-function cardClicked() {
+function cardClicked(evt) {
   const clickedCard = event.target;
   if (openCards.length < 2 && !openCards.includes(clickedCard)) {
     clickedCard.parentNode.classList.add('open', 'show');
@@ -34,6 +32,7 @@ function cardClicked() {
   } if(openCards.length === 2) {
     evaluateFlip();
   }
+  firstClick();
 }
 
 // evaluate if the 2 cards that were clicked match
@@ -87,7 +86,7 @@ function matchedCards() {
   }
 }
 
-// time counter
+// start the clock
 function startTimer() {
   timer = setInterval(function(){
     seconds++;
@@ -106,16 +105,18 @@ function startTimer() {
 
 // looks for first click to start timer
 function firstClick() {
-  if (openCards.length === 1 && movesCount.length === 0); {
-    startTimer();
+  if (openCards.length === 1 && movesCount === 0) {
+  startTimer();
   }
-} firstClick();
-
+}
+// stop the clock
 function stopTimer() {
   clearInterval(timer);
 }
 
 // reset the game when the reset button is clickedCard
+
+
 function resetGame() {
 
 }
