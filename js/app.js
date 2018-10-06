@@ -4,6 +4,11 @@ let openCards = []
 let movesCount = 0;
 let stars = [].slice.call(document.querySelectorAll('.fa-star'));
 let matches = []
+let seconds = 0;
+let minutes = 0;
+let clock = []
+// .slice.call(document.querySelector('.clock'));
+// let clock = []
 
 //shuffleCards
 function cardShuffle() {
@@ -25,7 +30,6 @@ function cardClicked(evt) {
   if (openCards.length < 2 && !openCards.includes(clickedCard)) {
     clickedCard.parentNode.classList.add('open', 'show');
     openCards.push(clickedCard);
-    // console.log(openCards);
   } if(openCards.length === 2) {
     evaluateFlip();
   }
@@ -40,9 +44,6 @@ function evaluateFlip(){
     openCards = [];
     moves();
     matchedCards();
-    // console.log(matches);
-    // console.log('they match');
-    // console.log(openCards);
   } else {
     setTimeout(function(){
       openCards[0].parentNode.classList.remove('open', 'show');
@@ -63,28 +64,60 @@ function moves() {
 
 // remove stars as moves increase
 function starCount() {
-  if (movesCount === 5) {
+  if (movesCount === 10) {
     stars[4].remove('fa-star');
-  } else if (movesCount === 10) {
-    stars[3].remove('fa-star');
   } else if (movesCount === 15) {
-    stars[2].remove('fa-star');
+    stars[3].remove('fa-star');
   } else if (movesCount === 20) {
+    stars[2].remove('fa-star');
+  } else if (movesCount === 25) {
     stars[1].remove('fa-star');
   } else {
     movesCount > 20;
   }
 }
 
-
 // keeps track of how many cards are matched
 function matchedCards() {
   matches++;
   if (matches === 8) {
+    // clearInterval(startTimer());
     // console.log('game won');
   }
 }
 
+// time counter
+function startTimer() {
+  timer = setInterval(function(){
+    seconds++;
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      if (seconds === 60) {
+        minutes++;
+        seconds = 0 + "0";
+      }
+      clock.pop();
+      clock.push(minutes + ":" + seconds);
+      document.querySelector('.clock').innerHTML = clock;
+  }, 1000);
+}
+// startTimer();
+// clock.innerHTML = gameTimer;
+// function displayTimer () {
+//   const timer = document.querySelector('.clock');
+//   timer.innerHTML = clock;
+// }
+// displayTimer();
+// stop timer
+function stopTimer() {
+
+}
+
+// reset the game when the reset button is clickedCard
+function resetGame() {
+
+}
 
 // provided in original document from Udacity:
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -101,13 +134,9 @@ function shuffle(array) {
 
     return array;
 }
-
-
 /*
  TO DO LIST
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
-
  // game reset
  // timer
