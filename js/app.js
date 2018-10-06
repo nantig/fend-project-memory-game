@@ -7,6 +7,7 @@ let matches = []
 let seconds = 0;
 let minutes = 0;
 let clock = []
+let cardsClicked = []
 // .slice.call(document.querySelector('.clock'));
 // let clock = []
 
@@ -25,7 +26,7 @@ for (card of cards) {
 }
 
 // when a card is clicked...
-function cardClicked(evt) {
+function cardClicked() {
   const clickedCard = event.target;
   if (openCards.length < 2 && !openCards.includes(clickedCard)) {
     clickedCard.parentNode.classList.add('open', 'show');
@@ -34,6 +35,7 @@ function cardClicked(evt) {
     evaluateFlip();
   }
 }
+
 // evaluate if the 2 cards that were clicked match
 function evaluateFlip(){
   if (openCards[0].className === openCards[1].className){
@@ -81,8 +83,7 @@ function starCount() {
 function matchedCards() {
   matches++;
   if (matches === 8) {
-    // clearInterval(startTimer());
-    // console.log('game won');
+    stopTimer();
   }
 }
 
@@ -102,16 +103,16 @@ function startTimer() {
       document.querySelector('.clock').innerHTML = clock;
   }, 1000);
 }
-// startTimer();
-// clock.innerHTML = gameTimer;
-// function displayTimer () {
-//   const timer = document.querySelector('.clock');
-//   timer.innerHTML = clock;
-// }
-// displayTimer();
-// stop timer
-function stopTimer() {
 
+// looks for first click to start timer
+function firstClick() {
+  if (openCards.length === 1 && movesCount.length === 0); {
+    startTimer();
+  }
+} firstClick();
+
+function stopTimer() {
+  clearInterval(timer);
 }
 
 // reset the game when the reset button is clickedCard
