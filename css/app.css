@@ -118,3 +118,86 @@ h1 {
   float: center;
   padding-left: 50px;
 }
+
+
+/*  modal */
+
+.overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(7, 9, 15, 0.5);
+}
+
+.modal-frame {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  transform: translate(50%, 5%);
+  align-items: flex-start;
+  border-radius: 5px;
+  width: 400px;
+  /* height: 500px; */
+  background-color: #ECEBE4;
+  margin: 0;
+}
+
+.title-bg {
+  background-color: #ffffff;
+  width: 400px;
+  height: 80px;
+  border-radius: 5px 5px 0px 0px;
+  margin: 0;
+  /* justify-content: flex-start; */
+}
+
+.title{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+
+}
+
+.game-details {
+  display: flex;
+  flex-flow: column wrap;
+  text-align: center;
+
+}
+
+.game-data {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+  margin: 20px;
+}
+
+.button-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-replay{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  background-color: #26A96C;
+  border: none;
+  color: #ffffff;
+  padding: 20px 45px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 30px;
+
+}
+
+.button-close{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  background-color: #ffffff;
+  border: 1px;
+  color: #1D1D1D;
+  padding: 20px 45px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 30px;
+}
