@@ -1,18 +1,14 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
-let openCards = [];
+let guessedCards = [];
 let matches = [];
 let movesCount = 0;
 let stars = [].slice.call(document.querySelectorAll('.fa-star'));
-// let stars = [].slice.call(document.querySelectorAll('.stars li'));
 let seconds = 0;
 let minutes = 0;
 let clock = [];
 let reset = [].slice.call(document.querySelectorAll('.restart'));
-// let startTime = new Date();
-// let timerOn = false;
 
-console.log(stars);
 // function resetCardState(card) { // could be card (reference to DOM node), or index of card in the array
 //   // card.parentNode.classList.remove('open', 'show'); OR cards[cardIndex].parentNode.classList.remove('open', 'show');
 // }
@@ -36,44 +32,44 @@ for (card of cards) {
 
 function cardClicked(evt) {
   const clickedCard = event.target;
- if (openCards.length === 2) {
+ if (guessedCards.length === 2) {
    resetGuessedCards();
  } else {
-   if (openCards.length < 2 && !openCards.includes(clickedCard)) {
+   if (guessedCards.length < 2 && !guessedCards.includes(clickedCard)) {
      clickedCard.parentNode.classList.add('open', 'show');
-     openCards.push(clickedCard);
+     guessedCards.push(clickedCard);
    }
 
-   if (openCards.length === 2) {
+   if (guessedCards.length === 2) {
      evaluateFlip();
    }
  }
   firstClick();
 }
-function clearOpenCards() {
-  openCards = [];
+function clearguessedCards() {
+  guessedCards = [];
 }
 
 function cardMatch () {
-  openCards[0].parentNode.classList.remove('show');
-  openCards[1].parentNode.classList.remove('show');
-  openCards[0].parentNode.classList.add('match');
-  openCards[1].parentNode.classList.add('match');
+  guessedCards[0].parentNode.classList.remove('show');
+  guessedCards[1].parentNode.classList.remove('show');
+  guessedCards[0].parentNode.classList.add('match');
+  guessedCards[1].parentNode.classList.add('match');
   // console.log(cards);
-  // clearOpenCards();
+  // clearguessedCards();
   matchedCards();
 }
 
 function resetGuessedCards() {
   setTimeout(function(){
-    openCards[0].parentNode.classList.remove('open', 'show');
-    openCards[1].parentNode.classList.remove('open', 'show');
-    clearOpenCards();}, 500);
+    guessedCards[0].parentNode.classList.remove('open', 'show');
+    guessedCards[1].parentNode.classList.remove('open', 'show');
+    clearguessedCards();}, 500);
 }
 
 function evaluateFlip(){
   moves();
-  if (openCards[0].className === openCards[1].className){
+  if (guessedCards[0].className === guessedCards[1].className){
     cardMatch();
   } else {
     resetGuessedCards();
@@ -112,12 +108,12 @@ function starCount() {
 // }
 
 function matchedCards() {
-  matches = matches.concat(openCards);
+  matches = matches.concat(guessedCards);
   // console.log('matches: ' + matches);
   if (matches.length === cards.length) {
     stopTimer();
   }
-  clearOpenCards();
+  clearguessedCards();
 }
 
 // start the clock
@@ -142,7 +138,7 @@ function startTimer() {
 
 // looks for first click to start timer
 function firstClick() {
-  if (openCards.length === 1 && movesCount === 0) {
+  if (guessedCards.length === 1 && movesCount === 0) {
   startTimer();
   }
 }
