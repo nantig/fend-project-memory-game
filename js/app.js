@@ -1,13 +1,21 @@
 // array with all cards
 let cards = [].slice.call(document.querySelectorAll('.card'));
-let openCards = []
+let openCards = [];
+let matches = [];
 let movesCount = 0;
 let stars = [].slice.call(document.querySelectorAll('.fa-star'));
-let matches = []
+// let stars = [].slice.call(document.querySelectorAll('.stars li'));
 let seconds = 0;
 let minutes = 0;
-let clock = []
+let clock = [];
 let reset = [].slice.call(document.querySelectorAll('.restart'));
+// let startTime = new Date();
+// let timerOn = false;
+
+console.log(stars);
+// function resetCardState(card) { // could be card (reference to DOM node), or index of card in the array
+//   // card.parentNode.classList.remove('open', 'show'); OR cards[cardIndex].parentNode.classList.remove('open', 'show');
+// }
 
 //shuffleCards
 function cardShuffle() {
@@ -23,35 +31,52 @@ for (card of cards) {
   card.addEventListener('click', cardClicked);
 }
 
+//ideal state would be to have the event listener on the deck instead of on each card - event delegation
 // when a card is clicked...
+
 function cardClicked(evt) {
   const clickedCard = event.target;
-  if (openCards.length < 2 && !openCards.includes(clickedCard)) {
-    clickedCard.parentNode.classList.add('open', 'show');
-    openCards.push(clickedCard);
-  } if(openCards.length === 2) {
-    evaluateFlip();
-  }
+ if (openCards.length === 2) {
+   resetGuessedCards();
+ } else {
+   if (openCards.length < 2 && !openCards.includes(clickedCard)) {
+     clickedCard.parentNode.classList.add('open', 'show');
+     openCards.push(clickedCard);
+   }
+
+   if (openCards.length === 2) {
+     evaluateFlip();
+   }
+ }
   firstClick();
 }
+function clearOpenCards() {
+  openCards = [];
+}
 
-// evaluate if the 2 cards that were clicked match
+function cardMatch () {
+  openCards[0].parentNode.classList.remove('show');
+  openCards[1].parentNode.classList.remove('show');
+  openCards[0].parentNode.classList.add('match');
+  openCards[1].parentNode.classList.add('match');
+  // console.log(cards);
+  // clearOpenCards();
+  matchedCards();
+}
+
+function resetGuessedCards() {
+  setTimeout(function(){
+    openCards[0].parentNode.classList.remove('open', 'show');
+    openCards[1].parentNode.classList.remove('open', 'show');
+    clearOpenCards();}, 500);
+}
+
 function evaluateFlip(){
+  moves();
   if (openCards[0].className === openCards[1].className){
-    openCards[0].parentNode.classList.remove('show');
-    openCards[1].parentNode.classList.remove('show');
-    openCards[0].parentNode.classList.add('match');
-    openCards[1].parentNode.classList.add('match');
-    openCards = [];
-    moves();
-    matchedCards();
+    cardMatch();
   } else {
-    setTimeout(function(){
-      openCards[0].parentNode.classList.remove('open', 'show');
-      openCards[1].parentNode.classList.remove('open', 'show');
-      openCards = []; }, 500);
-      moves();
-    // console.log('no match');
+    resetGuessedCards();
   }
 }
 
@@ -65,30 +90,42 @@ function moves() {
 
 // remove stars as moves increase
 function starCount() {
-  if (movesCount === 10) {
-    stars[4].remove('fa-star');
-  } else if (movesCount === 15) {
-    stars[3].remove('fa-star');
-  } else if (movesCount === 20) {
-    stars[2].remove('fa-star');
-  } else if (movesCount === 25) {
-    stars[1].remove('fa-star');
+  if (movesCount === 12) {
+    stars[4].classList.add('hide');
+  } else if (movesCount === 18) {
+    stars[3].classList.add('hide');
+  } else if (movesCount === 24) {
+    stars[2].classList.add('hide');
+  } else if (movesCount === 30) {
+    stars[1].classList.add('hide');
   } else {
-    movesCount > 20;
+    movesCount > 30;
   }
 }
 
 // keeps track of how many cards are matched
+// function matchedCards() {
+//   matches++;
+//   if (matches === 8) {
+//     stopTimer();
+//   }
+// }
+
 function matchedCards() {
-  matches++;
-  if (matches === 8) {
+  matches = matches.concat(openCards);
+  // console.log('matches: ' + matches);
+  if (matches.length === cards.length) {
     stopTimer();
   }
+  clearOpenCards();
 }
 
 // start the clock
 function startTimer() {
   timer = setInterval(function(){
+    // currentTime = new Date();
+    // totalTime = currentTime - startTime;
+    // format totalTime for display in HH:MM:SS format
     seconds++;
       if (seconds < 10) {
         seconds = "0" + seconds;
@@ -116,9 +153,41 @@ function stopTimer() {
 
 // reset the game when the reset button is clickedCard
 
+for (reset of reset) {
+  reset.addEventListener('click', resetGame);
+}
+
+function closeAllCards() {
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].classList.remove('open', 'match', 'show');
+  }
+}
+
+function resetClock() {
+  document.querySelector('.clock').innerHTML = "0:00";
+  minutes = 0;
+  seconds = 0;
+  clock = [];
+}
+
+function resetMovesCount() {
+  document.querySelector('.moves').innerHTML = "0";
+  movesCount = 0;
+}
+
+function resetStars() {
+  for (let i = 0; i < stars.length; i++) {
+      stars[i].classList.remove('hide');
+    }
+}
 
 function resetGame() {
-
+  stopTimer();
+  closeAllCards();
+  resetClock();
+  resetMovesCount();
+  resetStars();
+  cardShuffle();
 }
 
 // provided in original document from Udacity:
