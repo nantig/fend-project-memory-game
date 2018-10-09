@@ -4,14 +4,13 @@ let guessedCards = [];
 let matches = [];
 let movesCount = 0;
 let stars = [].slice.call(document.querySelectorAll('.fa-star'));
+let finalStarCount = 5;
 let seconds = 0;
 let minutes = 0;
 let clock = [];
 let reset = [].slice.call(document.querySelectorAll('.restart'));
-
-// function resetCardState(card) { // could be card (reference to DOM node), or index of card in the array
-//   // card.parentNode.classList.remove('open', 'show'); OR cards[cardIndex].parentNode.classList.remove('open', 'show');
-// }
+let overlay = document.querySelector('.overlay');
+let modal = document.querySelector('.modal-frame');
 
 //shuffleCards
 function cardShuffle() {
@@ -27,9 +26,7 @@ for (card of cards) {
   card.addEventListener('click', cardClicked);
 }
 
-//ideal state would be to have the event listener on the deck instead of on each card - event delegation
-// when a card is clicked...
-
+// when an individual card is clicked
 function cardClicked(evt) {
   const clickedCard = event.target;
  if (guessedCards.length === 2) {
@@ -39,15 +36,21 @@ function cardClicked(evt) {
      clickedCard.parentNode.classList.add('open', 'show');
      guessedCards.push(clickedCard);
    }
-
    if (guessedCards.length === 2) {
      evaluateFlip();
    }
  }
   firstClick();
 }
-function clearguessedCards() {
-  guessedCards = [];
+
+// see if two cards match, if they do match, if not, flip over
+function evaluateFlip(){
+  moves();
+  if (guessedCards[0].className === guessedCards[1].className){
+    cardMatch();
+  } else {
+    resetGuessedCards();
+  }
 }
 
 function cardMatch () {
@@ -55,8 +58,6 @@ function cardMatch () {
   guessedCards[1].parentNode.classList.remove('show');
   guessedCards[0].parentNode.classList.add('match');
   guessedCards[1].parentNode.classList.add('match');
-  // console.log(cards);
-  // clearguessedCards();
   matchedCards();
 }
 
@@ -67,16 +68,22 @@ function resetGuessedCards() {
     clearguessedCards();}, 500);
 }
 
-function evaluateFlip(){
-  moves();
-  if (guessedCards[0].className === guessedCards[1].className){
-    cardMatch();
-  } else {
-    resetGuessedCards();
-  }
+function clearguessedCards() {
+  guessedCards = [];
 }
 
-// Record each move a player makes
+// when two cards match
+function matchedCards() {
+  matches = matches.concat(guessedCards);
+  if (matches.length === cards.length) {
+    stopTimer();
+    clearguessedCards();
+    showYouWonModal();
+  }
+  clearguessedCards();
+}
+
+// Record each move a player makes. 1 move = two flipped cards
 function moves() {
   movesCount++;
   const movesNumber = document.querySelector('.moves');
@@ -84,44 +91,29 @@ function moves() {
   starCount();
 }
 
-// remove stars as moves increase
+// remove stars as movesCount increases
 function starCount() {
   if (movesCount === 12) {
     stars[4].classList.add('hide');
+    finalStarCount = 4;
   } else if (movesCount === 18) {
     stars[3].classList.add('hide');
+    finalStarCount = 3;
   } else if (movesCount === 24) {
     stars[2].classList.add('hide');
+    finalStarCount = 2;
   } else if (movesCount === 30) {
     stars[1].classList.add('hide');
-  } else {
-    movesCount > 30;
+    finalStarCount = 1;
   }
-}
-
-// keeps track of how many cards are matched
-// function matchedCards() {
-//   matches++;
-//   if (matches === 8) {
-//     stopTimer();
-//   }
-// }
-
-function matchedCards() {
-  matches = matches.concat(guessedCards);
-  // console.log('matches: ' + matches);
-  if (matches.length === cards.length) {
-    stopTimer();
-  }
-  clearguessedCards();
+  // else {
+  //   finalStarCount = 1;
+  // }
 }
 
 // start the clock
 function startTimer() {
   timer = setInterval(function(){
-    // currentTime = new Date();
-    // totalTime = currentTime - startTime;
-    // format totalTime for display in HH:MM:SS format
     seconds++;
       if (seconds < 10) {
         seconds = "0" + seconds;
@@ -136,19 +128,18 @@ function startTimer() {
   }, 1000);
 }
 
-// looks for first click to start timer
+// timer start/stop functions
 function firstClick() {
   if (guessedCards.length === 1 && movesCount === 0) {
   startTimer();
   }
 }
-// stop the clock
+
 function stopTimer() {
   clearInterval(timer);
 }
 
-// reset the game when the reset button is clickedCard
-
+// resets for each element and full game reset
 for (reset of reset) {
   reset.addEventListener('click', resetGame);
 }
@@ -171,10 +162,18 @@ function resetMovesCount() {
   movesCount = 0;
 }
 
+function resetMatches() {
+  matches = [];
+}
+
 function resetStars() {
   for (let i = 0; i < stars.length; i++) {
       stars[i].classList.remove('hide');
     }
+}
+
+function resetFinalStarCount() {
+  finalStarCount = 5;
 }
 
 function resetGame() {
@@ -182,9 +181,36 @@ function resetGame() {
   closeAllCards();
   resetClock();
   resetMovesCount();
+  resetMatches();
   resetStars();
+  resetFinalStarCount();
   cardShuffle();
 }
+
+// WINNER modal
+function showYouWonModal() {
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].classList.remove('open');
+  }
+  document.querySelector('.total-time').insertAdjacentHTML('afterend', clock);
+  document.querySelector('.total-moves').insertAdjacentHTML('afterend', movesCount);
+  document.querySelector('.total-stars').insertAdjacentHTML('afterend', finalStarCount);
+  overlay.classList.toggle('hide');
+  modal.classList.toggle('hide');
+}
+
+// event listeners for buttons on modal
+// Close Button
+document.querySelector('.button-close').addEventListener('click', () => {
+  overlay.classList.toggle('hide');
+  modal.classList.toggle('hide');
+});
+// Replay Button
+document.querySelector('.button-replay').addEventListener('click', () => {
+  resetGame();
+  overlay.classList.toggle('hide');
+  modal.classList.toggle('hide');
+});
 
 // provided in original document from Udacity:
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -201,9 +227,3 @@ function shuffle(array) {
 
     return array;
 }
-/*
- TO DO LIST
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
- // game reset
- // timer
