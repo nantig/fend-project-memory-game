@@ -79,6 +79,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    pointer-events: none;
 }
 .fa {
   width: 100%;
@@ -125,6 +126,7 @@ h1 {
 .hide {
   display: none;
 }
+
 .overlay {
   position: absolute;
   height: 100%;
