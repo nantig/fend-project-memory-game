@@ -33,6 +33,7 @@ h1 {
     font-weight: 300;
 }
 
+
 /*
  * Styles for the deck of cards
  */
@@ -120,7 +121,6 @@ h1 {
   padding-left: 50px;
 }
 
-
 /*  modal */
 
 .hide {
@@ -137,12 +137,12 @@ h1 {
 .modal-frame {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   text-align: center;
   transform: translate(50%, 5%);
   align-items: flex-start;
   border-radius: 5px;
   width: 400px;
-  /* height: 500px; */
   background-color: #ECEBE4;
   margin: 0;
 }
@@ -150,13 +150,11 @@ h1 {
 .title-bg {
   background-color: #ffffff;
   width: 400px;
-  height: 80px;
   border-radius: 5px 5px 0px 0px;
-  margin: 0;
-  /* justify-content: flex-start; */
 }
 
 .title{
+  /* justify-content: center; */
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
 
@@ -165,14 +163,14 @@ h1 {
 .game-details {
   display: flex;
   flex-flow: column wrap;
-  text-align: center;
-
+  padding-top: 25px;
 }
 
-.game-data {
+.total-time .total-stars .total-moves {
   font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   margin: 20px;
+  align-items: center;
 }
 
 .button-actions {
