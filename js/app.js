@@ -11,6 +11,7 @@ let clock = [];
 let reset = [].slice.call(document.querySelectorAll('.restart'));
 let overlay = document.querySelector('.overlay');
 let modal = document.querySelector('.modal-frame');
+let timerOn = false;
 
 //shuffleCards
 function cardShuffle() {
@@ -106,9 +107,16 @@ function starCount() {
     stars[1].classList.add('hide');
     finalStarCount = 1;
   }
-  // else {
-  //   finalStarCount = 1;
+}
+
+// timer start/stop functions
+function firstClick() {
+  // if (guessedCards.length === 1 && movesCount === 0) {
+  // startTimer();
   // }
+  if (timerOn === false) {
+    startTimer();
+  }
 }
 
 // start the clock
@@ -126,13 +134,7 @@ function startTimer() {
       clock.push(minutes + ":" + seconds);
       document.querySelector('.clock').innerHTML = clock;
   }, 1000);
-}
-
-// timer start/stop functions
-function firstClick() {
-  if (guessedCards.length === 1 && movesCount === 0) {
-  startTimer();
-  }
+  timerOn = true;
 }
 
 function stopTimer() {
@@ -155,6 +157,7 @@ function resetClock() {
   minutes = 0;
   seconds = 0;
   clock = [];
+  timerOn = false;
 }
 
 function resetMovesCount() {
@@ -179,6 +182,7 @@ function resetFinalStarCount() {
 function resetGame() {
   stopTimer();
   closeAllCards();
+  clearguessedCards();
   resetClock();
   resetMovesCount();
   resetMatches();
